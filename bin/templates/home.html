@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Todo List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class = "container">
+		<h1>All Todos</h1>
+		<div class = "btn-group">
+		    <a href="/newtask" class="btn btn-secondary">Add new task</a>
+		    <a href="/home" class="btn btn-secondary">Show all tasks</a>
+		    <div class="dropdown">
+		      <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown">
+		        Filter By
+		      </a>
+		      <div class="dropdown-menu">
+		        <a class="dropdown-item" href="/sortbyfood">Mat</a>
+		        <a class="dropdown-item" href="/sortbytransport">Transport</a>
+		        <a class="dropdown-item" href="/sortbyassignment">Oppgave</a>
+		      </div>
+		    </div>
+		</div>
+		<hr/>
+		<div class = "container" th:each="todo,iterStat : ${todoList}">
+	        <div class="card" th:object="${todo}">
+	            <div class="card card-block">
+	               <h4 class="card-title" th:text="'Todo No. ' + ${iterStat.count}">Placeholder</h4>
+                   <h6 class="card-subtitle mb-2 text-muted" th:if="${todo.food} == true">Mat</h6>
+	               <h6 class="card-subtitle mb-2 text-muted" th:if="${todo.transport} == true">Transport</h6>
+	               <h6 class="card-subtitle mb-2 text-muted" th:if="${todo.assignment} == true">Oppgave</h6>
+	               <hr style="width: 100%;"/>
+	               <p class="card-text" th:text="${todo.task}"/>
+           		   <div class="text-center">
+               	   <form action="#" th:action="@{/delete}" method="post">
+						<input type="hidden" th:value="${todo.id}" name="id" />
+               	   		<input type="submit" value="Done" class="btn btn-success"/>
+               	   </form>  
+	               </div>   
+	            </div>
+	        </div>
+		</div>
+	</div>	
+</body>
+</html>
